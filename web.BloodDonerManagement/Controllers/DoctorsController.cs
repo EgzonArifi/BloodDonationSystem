@@ -47,7 +47,7 @@ namespace web.BloodDonerManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Lastname")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace web.BloodDonerManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Lastname")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
