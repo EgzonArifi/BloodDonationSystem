@@ -9,6 +9,7 @@ namespace web.BloodDonerManagement.Models
     {
         Negative =1,
         Positive,
-        APositive
+        APositive,
+        BNegative
     }
 }

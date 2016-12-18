@@ -8,19 +8,72 @@ using web.BloodDonerManagement.Models;
 namespace web.BloodDonerManagement.Controllers
 {
    [Authorize]
-    public class PatientController : Controller
+    public class PatientController : BaseController
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        public JsonResult datareport()
+        {
+           
+            string[] test = { "egzoni", "sefa", "goveda" };
+            return Json(new { dataname = test, success = true }, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Patient
         public ActionResult Index()
         {
-            List<PatientsViewModel> model = context.Patient.Select(m => new PatientsViewModel
+            var stock = db.BloodStock.Include("Patient").Include("Doctor");
+            List<PatientsViewModel> model = db.Patient.Select(m => new PatientsViewModel
             {
+                Id = m.Id,
+                Name = m.Name,
+                LastName = m.Lastname,
                 BirthDate = m.BirthDate,
-                BloodType = m.BloodType.ToString(),
+                BloodType = m.BloodType,
                 Patient = m.Name + " " + m.Lastname
             }).ToList();
+            ViewBag.bloodtype = Enum.GetValues(typeof(BloodType));//.Cast < string[]>() ;
             return View(model);
         }
+
+        public ActionResult addupdate(PatientsViewModel model)
+        {
+            if (model.Id == 0)
+            {
+                db.Patient.Add(new Patient
+                {
+                    BirthDate = model.BirthDate,
+                    BloodType = model.BloodType,
+                    Lastname = model.LastName,
+                    Name = model.Name
+                });
+                db.SaveChanges();
+            }
+            else
+            {
+                var patient = db.Patient.Where(x => x.Id == model.Id).FirstOrDefault();
+                if (patient != null)
+                {
+                    patient.Name = model.Name;
+                    //fill other columns form model
+                    db.SaveChanges();
+                }
+
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult delete(int Id)
+        {
+            var patient = db.Patient.Where(x => x.Id == Id).FirstOrDefault();
+            if (patient != null)
+            {
+                db.Patient.Remove(patient);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
