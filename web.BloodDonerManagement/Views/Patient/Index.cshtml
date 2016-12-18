@@ -1,0 +1,29 @@
+﻿@model  List<web.BloodDonerManagement.Models.PatientsViewModel>
+<h3> lista e pacientave</h3>
+
+<table class="table table-responsive table-striped">
+    <th>
+        Emri
+    </th>
+    <th>
+        Data e lindjes
+    </th>
+    <th>
+        Grupi i gjakut
+    </th>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Patient
+            </td>
+            <td>
+                @item.BirthDate.ToShortDateString()
+            </td>
+            <td>
+                @item.BloodType
+            </td>
+        </tr>
+    }
+
+</table>
