@@ -61,6 +61,9 @@ namespace web.BloodDonerManagement.Controllers
                 {
                     patient.Name = model.Name;
                     //fill other columns form model
+                    patient.BloodType = model.BloodType;
+                    patient.Lastname = model.LastName;
+                    patient.BirthDate = model.BirthDate;
                     db.SaveChanges();
                 }
 

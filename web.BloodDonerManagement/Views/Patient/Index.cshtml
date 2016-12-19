@@ -1,9 +1,9 @@
 ﻿@model  List<web.BloodDonerManagement.Models.PatientsViewModel>
-<h3> lista e pacientave</h3>
-
+<h3> Lista e Pacientave</h3>
 <button  type="button" class="btn btn-primary btn-addPatient">
     <i class="glyphicon glyphicon-plus" ></i>
     Add new</button>
+<br/><br/>
 <table class="table table-responsive table-striped">
     <th>
         Emri
@@ -29,7 +29,10 @@
             </td>
             <td>
                 <div class="text-right">
-                    <button type="button" class="btn btn-default btn-edit" data-id="@item.Id" data-name="@item.Name">
+                    <button type="button" class="btn btn-default btn-edit" data-id="@item.Id" data-name="@item.Name" 
+                            data-lastname="@item.LastName"
+                            data-birthdate="@item.BirthDate.ToShortDateString()"
+                            data-bloodtype="@item.BloodType.ToString()">
                         <i class="glyphicon glyphicon-pencil"></i>
                     </button> 
 
@@ -76,7 +79,7 @@
                             <label>Data e lindjes</label>
                         </div>
                         <div class="col-sm-8">
-                            <input type="text" name="BirthDate" id="BirthDate" class="form-control" placeholder="dd.MM.yyyy" />
+                            <input type="text" name="BirthDate" id="BirthDate" class="form-control" placeholder="yyyy-mm-dd" />
                         </div>
                     </div>
 
@@ -126,6 +129,9 @@
            
             $('#Id').val(item.data('id'));
             $('#Name').val(item.data('name'));
+            $('#LastName').val(item.data('lastname'));
+            $('#BirthDate').val(item.data('birthdate'));
+            $('#BloodType').val(item.data('bloodtype'));
             $('#modalPatient').modal('show');
         });
 
@@ -135,6 +141,5 @@
                 $('#formDelete' + $(this).data('id')).submit();
             }
         });
-     
     });
 </script>
