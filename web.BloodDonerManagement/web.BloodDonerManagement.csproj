@@ -207,6 +207,8 @@
     <Compile Include="Models\BloodDoner.cs" />
     <Compile Include="Models\BloodStock.cs" />
     <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Models\Doctors.cs" />
+    <Compile Include="Models\DoctorsViewModel.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\IdentityHelper.cs" />
     <Compile Include="Models\IdentityModels.cs" />
