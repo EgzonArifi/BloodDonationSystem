@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
@@ -207,6 +208,8 @@
     <Compile Include="Models\BloodDoner.cs" />
     <Compile Include="Models\BloodStock.cs" />
     <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Models\Doctors.cs" />
+    <Compile Include="Models\DoctorsViewModel.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\IdentityHelper.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -377,6 +380,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
+    <Content Include="Views\Doctors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
