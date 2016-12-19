@@ -12,9 +12,16 @@ namespace web.BloodDonerManagement.Controllers
     {
         public JsonResult datareport()
         {
-           
-            string[] test = { "egzoni", "sefa", "goveda" };
-            return Json(new { dataname = test, success = true }, JsonRequestBehavior.AllowGet);
+            List<PatientsViewModel> model = db.Patient.Select(m => new PatientsViewModel
+            {
+                Id = m.Id,
+                Name = m.Name,
+                LastName = m.Lastname,
+                BirthDate = m.BirthDate,
+                BloodType = m.BloodType,
+                Patient = m.Name + " " + m.Lastname
+            }).ToList();
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Patient
@@ -73,7 +80,5 @@ namespace web.BloodDonerManagement.Controllers
 
             return RedirectToAction("Index");
         }
-
-
     }
 }
