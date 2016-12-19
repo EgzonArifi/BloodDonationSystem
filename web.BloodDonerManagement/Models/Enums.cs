@@ -12,4 +12,10 @@ namespace web.BloodDonerManagement.Models
         APositive,
         BNegative
     }
+
+    public enum Gender
+    {
+        Male,
+        Female
+    }
 }
