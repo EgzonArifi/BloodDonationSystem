@@ -86,7 +86,6 @@ namespace web.BloodDonerManagement.Controllers
                     patient.PatientGender = model.PatientGender;
                     db.SaveChanges();
                 }
-
             }
             return RedirectToAction("Index");
         }

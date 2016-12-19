@@ -23,6 +23,7 @@ namespace web.BloodDonerManagement.Models
         
         public DbSet<Patient> Patient { get; set; }
         public DbSet<BloodStock> BloodStock { get; set; }
+        public DbSet<Doctors> Doctors { get; set; }
         public ApplicationDbContext()
             : base("connectionstring", throwIfV1Schema: false)
         {

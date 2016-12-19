@@ -1,23 +1,16 @@
-﻿@model  List<web.BloodDonerManagement.Models.PatientsViewModel>
-<div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Warning!</strong> Better check yourself, you're not looking too good.
-</div>
-
-<h3> Lista e Pacientave</h3>
-<button  type="button" class="btn btn-primary btn-addPatient">
-    <i class="glyphicon glyphicon-plus" ></i>
-    Shto Pacientin</button>
-<br/><br/>
+﻿@model  List<web.BloodDonerManagement.Models.DoctorsViewModel>
+    <h3>Lista e Doktoreve</h3>
+<button type="button" class="btn btn-primary btn-addDoctor">
+    <i class="glyphicon glyphicon-plus"></i>
+    Shto doktorin
+</button>
+<br /><br />
 <table class="table table-responsive table-striped">
     <th>
         Emri
     </th>
     <th>
         Data e lindjes
-    </th>
-    <th>
-        Grupi i gjakut
     </th>
     <th>Adresa</th>
     <th>Telefoni</th>
@@ -27,34 +20,27 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @item.Patient
-            </td>
-            <td>
-                @item.BirthDate.ToShortDateString()
-            </td>
-            <td>
-                @item.BloodType
-            </td>
+            <td>@item.Doctor</td>
+            <td>@item.BirthDate.ToShortDateString()</td>
             <td>@item.Address, @item.City</td>
             <td>@item.PhoneNumber</td>
             <td>@item.Email</td>
-            <td>@item.PatientGender</td>
+            <td>@item.DoctorGender</td>
             <td>
                 <div class="text-right">
-                    <button type="button" class="btn btn-default btn-edit" data-id="@item.Id" data-name="@item.Name" 
+                    <button type="button" class="btn btn-default btn-edit" data-id="@item.Id" 
+                            data-firstname="@item.FirstName" 
                             data-lastname="@item.LastName"
                             data-birthdate="@item.BirthDate.ToShortDateString()"
-                            data-bloodtype="@item.BloodType.ToString()"
                             data-address="@item.Address"
                             data-city="@item.City"
                             data-phonenumber="@item.PhoneNumber"
                             data-email="@item.Email"
-                            data-gender="@item.PatientGender.ToString()">
+                            data-gender="@item.DoctorGender.ToString()">
                         <i class="glyphicon glyphicon-pencil"></i>
                     </button> 
 
-                    <form action="/Patient/delete/@item.Id" method="post" id="@("formDelete"+item.Id)"></form>
+                    <form action="/Doctors/delete/@item.Id" method="post" id="@("formDelete"+item.Id)"></form>
                     <button type="button" class="btn btn-default  btn-delete"  data-id="@item.Id">
                         <i class="glyphicon glyphicon-trash"></i>
                     </button> 
@@ -62,10 +48,8 @@
             </td>
         </tr>
     }
-
 </table>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="modalPatient">
+<div class="modal fade" tabindex="-1" role="dialog" id="modalDoctor">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -73,17 +57,17 @@
                 <h4 class="modal-title"> </h4>
             </div>
             <div class="modal-body">
-                <form action="/Patient/addOrUpdate" method="post" id="formPatient">
+                <form action="/Doctors/addOrUpdate" method="post" id="formDoctor">
                     <input type="hidden" name="Id" id="Id" value="0" />
                     <div class="row">
                         <div class="col-sm-4">
                             <label>Emri</label>
                         </div>
                         <div class="col-sm-8">
-                            <input type="text" name="Name" id="Name" class="form-control" />
+                            <input type="text" name="FirstName" id="FirstName" class="form-control" />
                         </div>
                     </div>
-                    <br/>
+                    <br />
                     <div class="row">
                         <div class="col-sm-4">
                             <label>Mbiemri</label>
@@ -99,21 +83,6 @@
                         </div>
                         <div class="col-sm-8">
                             <input type="text" name="BirthDate" id="BirthDate" class="form-control" placeholder="yyyy-mm-dd" />
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label>Grupi i gjakut</label>
-                        </div>
-                        <div class="col-sm-8">
-                            <select class="form-control" name="BloodType" id="BloodType">
-                                <option value="">...</option>
-                                @foreach (var item in ViewBag.bloodtype)
-                            {
-                                    <option value="@item">@item</option>
-                            }
-                            </select>
                         </div>
                     </div>
                     <br />
@@ -176,6 +145,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <script>
     $(document).ready(function () {
 
@@ -184,31 +154,30 @@
             showTodayButton:true
         });
 
-        $('.btn-addPatient').click(function () {
-            $('.modal-title').html('Pacient i ri');
-            $('#modalPatient').modal('show');
+        $('.btn-addDoctor').click(function () {
+            $('.modal-title').html('Doktori i ri');
+            $('#modalDoctor').modal('show');
         });
 
         $('.btn-save').click(function () {
             $('.alert-success').show()
-            $('#formPatient').submit();
+            $('#formDoctor').submit();
         });
 
         $('.btn-edit').click(function () {
             var item = $(this);
-            $('.modal-title').html('Edito pacientin ' + item.data('name'));
-           
+            $('.modal-title').html('Edito Doktorin: ' + item.data('firstname'));
+
             $('#Id').val(item.data('id'));
-            $('#Name').val(item.data('name'));
+            $('#FirstName').val(item.data('firstname'));
             $('#LastName').val(item.data('lastname'));
             $('#BirthDate').val(item.data('birthdate'));
-            $('#BloodType').val(item.data('bloodtype'));
             $('#PhoneNumber').val(item.data('phonenumber'));
             $('#Address').val(item.data('address'));
             $('#City').val(item.data('city'));
             $('#Email').val(item.data('email'));
             $('#Gender').val(item.data('gender'));
-            $('#modalPatient').modal('show');
+            $('#modalDoctor').modal('show');
         });
 
         $('.btn-delete').click(function () {
