@@ -1,4 +1,9 @@
 ﻿@model  List<web.BloodDonerManagement.Models.PatientsViewModel>
+<div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> Better check yourself, you're not looking too good.
+</div>
+
 <h3> Lista e Pacientave</h3>
 <button  type="button" class="btn btn-primary btn-addPatient">
     <i class="glyphicon glyphicon-plus" ></i>
@@ -14,6 +19,10 @@
     <th>
         Grupi i gjakut
     </th>
+    <th>Adresa</th>
+    <th>Telefoni</th>
+    <th>Email</th>
+    <th>Gjinia</th>
     <th></th>
     @foreach (var item in Model)
     {
@@ -27,12 +36,21 @@
             <td>
                 @item.BloodType
             </td>
+            <td>@item.Address, @item.City</td>
+            <td>@item.PhoneNumber</td>
+            <td>@item.Email</td>
+            <td>@item.PatientGender</td>
             <td>
                 <div class="text-right">
                     <button type="button" class="btn btn-default btn-edit" data-id="@item.Id" data-name="@item.Name" 
                             data-lastname="@item.LastName"
                             data-birthdate="@item.BirthDate.ToShortDateString()"
-                            data-bloodtype="@item.BloodType.ToString()">
+                            data-bloodtype="@item.BloodType.ToString()"
+                            data-address="@item.Address"
+                            data-city="@item.City"
+                            data-phonenumber="@item.PhoneNumber"
+                            data-email="@item.Email"
+                            data-gender="@item.PatientGender.ToString()">
                         <i class="glyphicon glyphicon-pencil"></i>
                     </button> 
 
@@ -55,7 +73,7 @@
                 <h4 class="modal-title"> </h4>
             </div>
             <div class="modal-body">
-                <form action="/Patient/addupdate" method="post" id="formPatient">
+                <form action="/Patient/addOrUpdate" method="post" id="formPatient">
                     <input type="hidden" name="Id" id="Id" value="0" />
                     <div class="row">
                         <div class="col-sm-4">
@@ -65,7 +83,7 @@
                             <input type="text" name="Name" id="Name" class="form-control" />
                         </div>
                     </div>
-
+                    <br/>
                     <div class="row">
                         <div class="col-sm-4">
                             <label>Mbiemri</label>
@@ -74,6 +92,7 @@
                             <input type="text" name="LastName" id="LastName" class="form-control" />
                         </div>
                     </div>
+                    <br />
                     <div class="row">
                         <div class="col-sm-4">
                             <label>Data e lindjes</label>
@@ -82,7 +101,7 @@
                             <input type="text" name="BirthDate" id="BirthDate" class="form-control" placeholder="yyyy-mm-dd" />
                         </div>
                     </div>
-
+                    <br />
                     <div class="row">
                         <div class="col-sm-4">
                             <label>Grupi i gjakut</label>
@@ -94,6 +113,57 @@
                             {
                                     <option value="@item">@item</option>
                             }
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Adress</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" name="Address" id="Address" class="form-control" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Qyteti</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" name="City" id="City" class="form-control" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" name="Email" id="Email" class="form-control" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Numri i telefoni</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" name="PhoneNumber" id="PhoneNumber" class="form-control" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Grupi i gjakut</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="Gender" id="Gender">
+                                <option value="">...</option>
+                                @foreach (var item in ViewBag.gender)
+                                {
+                                    <option value="@item">@item</option>
+                                }
                             </select>
                         </div>
                     </div>
@@ -120,6 +190,7 @@
         });
 
         $('.btn-save').click(function () {
+            $('.alert-success').show()
             $('#formPatient').submit();
         });
 
@@ -132,6 +203,11 @@
             $('#LastName').val(item.data('lastname'));
             $('#BirthDate').val(item.data('birthdate'));
             $('#BloodType').val(item.data('bloodtype'));
+            $('#PhoneNumber').val(item.data('phonenumber'));
+            $('#Address').val(item.data('address'));
+            $('#City').val(item.data('city'));
+            $('#Email').val(item.data('email'));
+            $('#Gender').val(item.data('gender'));
             $('#modalPatient').modal('show');
         });
 

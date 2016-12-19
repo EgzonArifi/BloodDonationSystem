@@ -19,7 +19,12 @@ namespace web.BloodDonerManagement.Controllers
                 LastName = m.Lastname,
                 BirthDate = m.BirthDate,
                 BloodType = m.BloodType,
-                Patient = m.Name + " " + m.Lastname
+                Patient = m.Name + " " + m.Lastname,
+                Address = m.Address,
+                City = m.City,
+                PhoneNumber = m.PhoneNumber,
+                Email = m.Email,
+                PatientGender = m.PatientGender
             }).ToList();
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -27,7 +32,7 @@ namespace web.BloodDonerManagement.Controllers
         // GET: Patient
         public ActionResult Index()
         {
-            var stock = db.BloodStock.Include("Patient").Include("Doctor");
+            //var stock = db.BloodStock.Include("Patient").Include("Doctor");
             List<PatientsViewModel> model = db.Patient.Select(m => new PatientsViewModel
             {
                 Id = m.Id,
@@ -35,13 +40,19 @@ namespace web.BloodDonerManagement.Controllers
                 LastName = m.Lastname,
                 BirthDate = m.BirthDate,
                 BloodType = m.BloodType,
-                Patient = m.Name + " " + m.Lastname
+                Patient = m.Name + " " + m.Lastname,
+                Address = m.Address,
+                City = m.City,
+                Email = m.Email,
+                PhoneNumber = m.PhoneNumber,
+                PatientGender = m.PatientGender
             }).ToList();
             ViewBag.bloodtype = Enum.GetValues(typeof(BloodType));//.Cast < string[]>() ;
+            ViewBag.gender = Enum.GetValues(typeof(Gender));
             return View(model);
         }
 
-        public ActionResult addupdate(PatientsViewModel model)
+        public ActionResult addOrUpdate(PatientsViewModel model)
         {
             if (model.Id == 0)
             {
@@ -50,7 +61,12 @@ namespace web.BloodDonerManagement.Controllers
                     BirthDate = model.BirthDate,
                     BloodType = model.BloodType,
                     Lastname = model.LastName,
-                    Name = model.Name
+                    Name = model.Name,
+                    Address = model.Address,
+                    City = model.City,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    PatientGender = model.PatientGender
                 });
                 db.SaveChanges();
             }
@@ -60,15 +76,18 @@ namespace web.BloodDonerManagement.Controllers
                 if (patient != null)
                 {
                     patient.Name = model.Name;
-                    //fill other columns form model
                     patient.BloodType = model.BloodType;
                     patient.Lastname = model.LastName;
                     patient.BirthDate = model.BirthDate;
+                    patient.Address = model.Address;
+                    patient.Email = model.Email;
+                    patient.PhoneNumber = model.PhoneNumber;
+                    patient.City = model.City;
+                    patient.PatientGender = model.PatientGender;
                     db.SaveChanges();
                 }
 
             }
-
             return RedirectToAction("Index");
         }
 

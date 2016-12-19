@@ -20,9 +20,8 @@ namespace web.BloodDonerManagement.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<BloodDoner> BloodDoner { get; set; }
+        
         public DbSet<Patient> Patient { get; set; }
-        public DbSet<Doctor> Doctor { get; set; }
         public DbSet<BloodStock> BloodStock { get; set; }
         public ApplicationDbContext()
             : base("connectionstring", throwIfV1Schema: false)

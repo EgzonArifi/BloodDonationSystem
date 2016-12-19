@@ -16,6 +16,6 @@ namespace web.BloodDonerManagement.Models
     public enum Gender
     {
         Male,
-        Female
+        Female,
     }
 }

@@ -9,7 +9,7 @@ namespace web.BloodDonerManagement.Models
     {
         public int Id { get; set; }
         public Patient Patient { get; set; }
-        public Doctor Doctor { get; set; }
+        //public Doctor Doctor { get; set; }
         public DateTime DonateDate { get; set; }
         public decimal BloodQuantity { get; set; }
         public string Comment { get; set; }
