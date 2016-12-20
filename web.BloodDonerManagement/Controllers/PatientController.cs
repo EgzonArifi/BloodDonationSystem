@@ -50,6 +50,7 @@ namespace web.BloodDonerManagement.Controllers
             ViewBag.bloodtype = Enum.GetValues(typeof(BloodType));//.Cast < string[]>() ;
             ViewBag.gender = Enum.GetValues(typeof(Gender));
             return View(model);
+  
         }
 
         public ActionResult addOrUpdate(PatientsViewModel model)
@@ -69,6 +70,7 @@ namespace web.BloodDonerManagement.Controllers
                     PatientGender = model.PatientGender
                 });
                 db.SaveChanges();
+                Session["alertAddNew"] = "True";
             }
             else
             {
@@ -85,6 +87,7 @@ namespace web.BloodDonerManagement.Controllers
                     patient.City = model.City;
                     patient.PatientGender = model.PatientGender;
                     db.SaveChanges();
+                    Session["alertEdit"] = "True";
                 }
             }
             return RedirectToAction("Index");

@@ -1,9 +1,21 @@
 ﻿@model  List<web.BloodDonerManagement.Models.PatientsViewModel>
+    @if(Session["alertAddNew"] != null && Session["alertAddNew"] == "True")
+    {
 <div class="alert alert-success alert-dismissible" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Warning!</strong> Better check yourself, you're not looking too good.
+    Ju sapo keni shtuar nje shenim te ri.
 </div>
+       @(Session["alertAddNew"] = null)
+    }
 
+@if (Session["alertEdit"] != null && Session["alertEdit"] == "True")
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Ju edituar shenimin me sukses.
+    </div>
+    @(Session["alertEdit"] = null)
+}
 <h3> Lista e Pacientave</h3>
 <button  type="button" class="btn btn-primary btn-addPatient">
     <i class="glyphicon glyphicon-plus" ></i>
