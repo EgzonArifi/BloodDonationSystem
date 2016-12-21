@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using web.BloodDonerManagement.Models;
 
 namespace web.BloodDonerManagement.Controllers
 {
@@ -15,19 +16,45 @@ namespace web.BloodDonerManagement.Controllers
     {
         public ActionResult Index()
         {
-            DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
+   
+         DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
+                .SetTitle(new Title
+                {
+                    Text = "Raporti i stokut te gjakut",
+                    X = -20
+                })
          .SetXAxis(new XAxis
          {
              Categories = new[] { "0+", "0-", "A+", "A-", "B+", "B-", "AB+", "AB-" }
          })
          .SetSeries(new Series
          {
-             Name = "Raporti i gjakut",
+             Name = "Sasia ne ml",
              Type = ChartTypes.Pie,
-             Data = new Data(new object[] { 29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5 })
+             Data = new Data(new object[] {
+                new object[] { "0 Pozitiv", 45 },
+                new object[] { "0 Negativ", 24.8 },
+                new object[] { "A Pozitiv", 12.8 },
+                new object[] { "A Negativ", 8.5 },
+                new object[] { "B Pozitiv", 5.2 },
+                new object[] { "B Negativ", 3.7 },
+                new object[] { "AB Pozitive", 35.2 },
+                new object[] { "AB Negativ", 23.7 }
+            })
          });
 
             return View(chart);
+        }
+        public JsonResult GetData()
+        {
+           
+            var EmployeeDetails = db.Patient.Select(m => new PatientsViewModel
+            {
+                Id = m.Id,
+                Name = m.Name,
+              
+            }).ToList(); ;
+            return Json(EmployeeDetails, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult About()
