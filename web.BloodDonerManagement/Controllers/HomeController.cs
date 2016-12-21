@@ -27,9 +27,25 @@ namespace web.BloodDonerManagement.Controllers
          {
              Categories = new[] { "0+", "0-", "A+", "A-", "B+", "B-", "AB+", "AB-" }
          })
+         //.SetPlotOptions(new PlotOptions
+         //{
+         //    Pie = new PlotOptionsPie
+         //    {
+         //        DataLabels = new PlotOptionsPieDataLabels
+         //        {
+         //            Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.categories.name +' %'; }"
+         //        }
+         //    }
+         //})
+         .SetTooltip(new Tooltip
+         {
+             Enabled = true,
+            // Formatter = @"function() {return '<b>' + this.series.name + '<\b><br/>' + this.x + ': ' + this.y; }"
+            PointFormat = "{series.name}: <b>{point.percentage:.1f} ml</b>"
+         })
          .SetSeries(new Series
          {
-             Name = "Sasia ne ml",
+             Name = "Sasia e gjakut",
              Type = ChartTypes.Pie,
              Data = new Data(new object[] {
                 new object[] { "0 Pozitiv", 45 },

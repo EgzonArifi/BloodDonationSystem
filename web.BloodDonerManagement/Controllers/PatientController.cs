@@ -10,7 +10,7 @@ namespace web.BloodDonerManagement.Controllers
    [Authorize]
     public class PatientController : BaseController
     {
-        public JsonResult datareport()
+        public JsonResult allPatients()
         {
             List<PatientsViewModel> model = db.Patient.Select(m => new PatientsViewModel
             {

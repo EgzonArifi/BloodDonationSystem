@@ -9,7 +9,7 @@ namespace web.BloodDonerManagement.Models
     public class Patient
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "You must enter firstname")]
         public string Name { get; set; }
         [Required]
         public string Lastname { get; set; }
