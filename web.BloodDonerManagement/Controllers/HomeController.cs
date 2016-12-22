@@ -16,8 +16,7 @@ namespace web.BloodDonerManagement.Controllers
     {
         public ActionResult Index()
         {
-   
-         DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
+            DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
                 .SetTitle(new Title
                 {
                     Text = "Raporti i stokut te gjakut",
@@ -27,22 +26,12 @@ namespace web.BloodDonerManagement.Controllers
          {
              Categories = new[] { "0+", "0-", "A+", "A-", "B+", "B-", "AB+", "AB-" }
          })
-         //.SetPlotOptions(new PlotOptions
-         //{
-         //    Pie = new PlotOptionsPie
-         //    {
-         //        DataLabels = new PlotOptionsPieDataLabels
-         //        {
-         //            Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.categories.name +' %'; }"
-         //        }
-         //    }
-         //})
          .SetTooltip(new Tooltip
          {
              Enabled = true,
-            // Formatter = @"function() {return '<b>' + this.series.name + '<\b><br/>' + this.x + ': ' + this.y; }"
             PointFormat = "{series.name}: <b>{point.percentage:.1f} ml</b>"
          })
+         
          .SetSeries(new Series
          {
              Name = "Sasia e gjakut",
@@ -57,20 +46,21 @@ namespace web.BloodDonerManagement.Controllers
                 new object[] { "AB Pozitive", 35.2 },
                 new object[] { "AB Negativ", 23.7 }
             })
-         });
-
+         }
+         );
             return View(chart);
         }
-        public JsonResult GetData()
+        public JsonResult StockReports()
         {
-           
-            var EmployeeDetails = db.Patient.Select(m => new PatientsViewModel
-            {
-                Id = m.Id,
-                Name = m.Name,
-              
-            }).ToList(); ;
-            return Json(EmployeeDetails, JsonRequestBehavior.AllowGet);
+            List<BloodStockViewModel> result = db.BloodStock
+                 .GroupBy(l => l.Patient.BloodType)
+                 .Select(cl => new BloodStockViewModel
+                    {
+                     BloodType = cl.FirstOrDefault().Patient.BloodType.ToString(),
+                     BloodQuantity = cl.Sum(c => c.BloodQuantity),
+                    }).ToList();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult About()

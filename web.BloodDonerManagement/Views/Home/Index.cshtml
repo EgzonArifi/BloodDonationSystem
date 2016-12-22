@@ -7,9 +7,59 @@
     <p class="lead">Blood Donor Management is system to create an e-Information about the donor and organization that are related to donating the blood.</p>
     <p><a href="" class="btn btn-primary btn-lg">Donate Blood</a></p>
 </div>
-@model DotNet.Highcharts.Highcharts
+@*@model DotNet.Highcharts.Highcharts
 
-@(Model)
+@(Model)*@
+
+ <div id="container" style="min-width: 350px; height: 350px; max-width: 600px; margin: 0 auto"></div>
+<script type="text/javascript">
+
+        $(function () {
+            $.ajax({
+                url: '/Home/StockReports',
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                processData: false,
+                cache: false,
+                delay: 15,
+                success: function (data) {
+                    var series = new Array();
+                    for (var i in data) {
+                        var serie = new Array(data[i].BloodType, data[i].BloodQuantity);
+                        series.push(serie);
+                    }
+                    //alert(series);
+                    DrawPieChart(series);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+        function DrawPieChart(series) {
+            chart = new Highcharts.Chart({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    renderTo: 'container'
+                },
+                title: {
+                    text: 'Raporti i stokut te gjakut'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.y} ml</b>'
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Sasia e gjakut',
+                    data: series
+                }]
+            });
+        }
+</script> 
 
 <div class="row">
     <div class="col-md-4">
