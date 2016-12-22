@@ -45,15 +45,15 @@
             <td>
                 @item.BirthDate.ToShortDateString()
             </td>
-            <td>
-                @item.BloodType
+            <td >
+                <label class="label label-danger">@item.BloodType</label>
             </td>
             <td>@item.Address, @item.City</td>
             <td>@item.PhoneNumber</td>
             <td>@item.Email</td>
             <td>@item.PatientGender</td>
             <td>
-                <div class="text-right">
+                <div class="row">
                     <button type="button" class="btn btn-default btn-edit" data-id="@item.Id" data-name="@item.Name" 
                             data-lastname="@item.LastName"
                             data-birthdate="@item.BirthDate.ToShortDateString()"

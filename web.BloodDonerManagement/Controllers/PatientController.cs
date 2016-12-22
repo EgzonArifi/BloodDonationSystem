@@ -99,8 +99,11 @@ namespace web.BloodDonerManagement.Controllers
             if (patient != null)
             {
                 db.Patient.Remove(patient);
-                var donation = db.BloodStock.Where(x => x.Patient.Id == Id).FirstOrDefault();
-                db.BloodStock.Remove(donation);
+                var donation = db.BloodStock.Where(x => x.Patient.Id == Id);
+                foreach (var item in donation)
+                {
+                 db.BloodStock.Remove(item);
+                }
                 db.SaveChanges();
             }
 
