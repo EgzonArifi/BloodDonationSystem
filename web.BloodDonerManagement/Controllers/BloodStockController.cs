@@ -29,5 +29,27 @@ namespace web.BloodDonerManagement.Controllers
         {
             return View("Create");
         }
+        [HttpPost]
+        public JsonResult PatientSearch(string Prefix)
+        {
+            //Note : you can bind same list from database  
+            List<BloodStockViewModel> ObjList = new List<BloodStockViewModel>()
+            {
+
+                new BloodStockViewModel {Id=1,Patient="Latur" },
+                new BloodStockViewModel {Id=2,Patient="Mumbai" },
+                new BloodStockViewModel {Id=3,Patient="Pune" },
+                new BloodStockViewModel {Id=4,Patient="Delhi" },
+                new BloodStockViewModel {Id=5,Patient="Dehradun" },
+                new BloodStockViewModel {Id=6,Patient="Noida" },
+                new BloodStockViewModel {Id=7,Patient="New Delhi" }
+
+        };
+            //Searching records from list using LINQ query  
+            var CityName = (from N in ObjList
+                            where N.Patient.StartsWith(Prefix)
+                            select new { N.Patient });
+            return Json(CityName, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -13,7 +13,7 @@
             </div><!-- /.col-lg-6 -->
             <div class="col-md-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
+                    <input type="text" class="form-control" id="patientText" placeholder="Search for...">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button">Go!</button>
                     </span>
@@ -64,3 +64,58 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+ 
+<p>
+    Enter country name @Html.TextBox("Country")
+    <input type="submit" id="GetCustomers" value="Submit" />
+</p>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Country").autocomplete({
+            source: function(request,response) {
+                $.ajax({
+                    url: "/BloodStock/PatientSearch",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Country, value: item.Country };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $("#patientText").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/BloodStock/PatientSearch",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        alert('success');
+                        response($.map(data, function (item) {
+                            alert('success');
+                            return { label: item.Name, value: item.Name };
+                        }))
+
+                    }
+                    
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
