@@ -52,10 +52,10 @@ namespace web.BloodDonerManagement.Controllers
         }
         public JsonResult StockReports()
         {
-            List<BloodStockViewModel> result = db.BloodStock
+            List<BloodStockReportViewModel> result = db.BloodStock
                  .GroupBy(l => l.Patient.BloodType)
-                 .Select(cl => new BloodStockViewModel
-                    {
+                 .Select(cl => new BloodStockReportViewModel
+                 {
                      BloodType = cl.FirstOrDefault().Patient.BloodType.ToString(),
                      BloodQuantity = cl.Sum(c => c.BloodQuantity),
                     }).ToList();
@@ -76,19 +76,5 @@ namespace web.BloodDonerManagement.Controllers
 
             return View();
         }
-        //public ActionResult CharacterColumn()
-        //{
-        //    ArrayList xValue = new ArrayList();
-        //    ArrayList yValue = new ArrayList();
-
-        //    var results = (from c in db.Patient select c);
-        //    results.ToList().ForEach(rs => xValue.Add(rs.Id));
-        //    results.ToList().ForEach(rs => yValue.Add(200));
-        //    new Chart(width: 600, height: 400, theme: ChartTheme.Green)
-        //        .AddTitle("HEllo from EGzon ARifi")
-        //        .AddSeries("Default", chartType: "Pie", xValue: xValue, yValues: yValue)
-        //        .Write("bmp");
-        //    return null;
-        //}
     }
 }
