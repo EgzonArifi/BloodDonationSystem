@@ -1,0 +1,47 @@
+﻿@model  List<web.BloodDonerManagement.Models.BloodStockViewModel>
+
+<h3> Lista e dhurimit te gjakut</h3>
+<button type="button" class="btn btn-primary btn-addPatient">
+    <i class="glyphicon glyphicon-plus"></i>
+    Shto shenim
+</button>
+<br /><br />
+<table class="table table-responsive table-striped">
+    <tr>
+        <th>
+            Pacienti
+        </th>
+        <th>
+           Sasia e gjakut
+        </th>
+        <th>
+           Data e dhurimit
+        </th>
+        <th>
+           Komenti
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BloodQuantity) ml
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DonateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

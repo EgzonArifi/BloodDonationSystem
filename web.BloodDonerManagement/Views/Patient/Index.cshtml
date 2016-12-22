@@ -67,7 +67,7 @@
                     </button> 
 
                     <form action="/Patient/delete/@item.Id" method="post" id="@("formDelete"+item.Id)"></form>
-                    <button type="button" class="btn btn-default  btn-delete"  data-id="@item.Id">
+                    <button type="button" id="deleteItem" class="btn btn-default  btn-delete" data-toggle="modal" data-target="#basic" data-id="@item.Id">
                         <i class="glyphicon glyphicon-trash"></i>
                     </button> 
                 </div>
@@ -188,46 +188,71 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script>
-    $(document).ready(function () {
 
-        $('#BirthDate').datetimepicker({
-            format: 'YYYY-MM-DD',
-            showTodayButton:true
+<div class="modal fade" id="basic" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
+                <button id="btnContinueDelete" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div></div>
+    <script>
+        $(document).ready(function () {
+
+            $('#BirthDate').datetimepicker({
+                format: 'YYYY-MM-DD',
+                showTodayButton: true
+            });
+
+            $('.btn-addPatient').click(function () {
+                $('.modal-title').html('Pacient i ri');
+                $('#modalPatient').modal('show');
+            });
+
+            $('.btn-save').click(function () {
+                $('.alert-success').show()
+                $('#formPatient').submit();
+            });
+
+            $('.btn-edit').click(function () {
+                var item = $(this);
+                $('.modal-title').html('Edito pacientin ' + item.data('name'));
+
+                $('#Id').val(item.data('id'));
+                $('#Name').val(item.data('name'));
+                $('#LastName').val(item.data('lastname'));
+                $('#BirthDate').val(item.data('birthdate'));
+                $('#BloodType').val(item.data('bloodtype'));
+                $('#PhoneNumber').val(item.data('phonenumber'));
+                $('#Address').val(item.data('address'));
+                $('#City').val(item.data('city'));
+                $('#Email').val(item.data('email'));
+                $('#Gender').val(item.data('gender'));
+                $('#modalPatient').modal('show');
+            });
+
+            //$('.btn-delete').click(function () {
+            //    if (confirm('Deshironi te fshini shenimin?') == 1) {
+
+            //        $('#formDelete' + $(this).data('id')).submit();
+            //    }
+            //});
+
+            var item_to_delete;
+            $(".btn-delete").click(function (e) {
+                item_to_delete = $(this).data('id');
+            });
+            $('#btnContinueDelete').click(function () {
+                window.location = "/Patient/delete/" + item_to_delete;
+            });
         });
-
-        $('.btn-addPatient').click(function () {
-            $('.modal-title').html('Pacient i ri');
-            $('#modalPatient').modal('show');
-        });
-
-        $('.btn-save').click(function () {
-            $('.alert-success').show()
-            $('#formPatient').submit();
-        });
-
-        $('.btn-edit').click(function () {
-            var item = $(this);
-            $('.modal-title').html('Edito pacientin ' + item.data('name'));
-           
-            $('#Id').val(item.data('id'));
-            $('#Name').val(item.data('name'));
-            $('#LastName').val(item.data('lastname'));
-            $('#BirthDate').val(item.data('birthdate'));
-            $('#BloodType').val(item.data('bloodtype'));
-            $('#PhoneNumber').val(item.data('phonenumber'));
-            $('#Address').val(item.data('address'));
-            $('#City').val(item.data('city'));
-            $('#Email').val(item.data('email'));
-            $('#Gender').val(item.data('gender'));
-            $('#modalPatient').modal('show');
-        });
-
-        $('.btn-delete').click(function () {
-            if (confirm('Deshironi te fshini shenimin?') == 1) {
-
-                $('#formDelete' + $(this).data('id')).submit();
-            }
-        });
-    });
-</script>
+    </script>

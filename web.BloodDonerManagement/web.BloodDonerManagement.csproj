@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BloodStockController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -420,6 +421,7 @@
     <Content Include="Views\Patient\Index.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\Shared\_AlertMessage.cshtml" />
+    <Content Include="Views\BloodStock\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

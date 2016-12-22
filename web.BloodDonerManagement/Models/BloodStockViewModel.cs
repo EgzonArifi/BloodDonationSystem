@@ -8,7 +8,7 @@ namespace web.BloodDonerManagement.Models
     public class BloodStockViewModel
     {
         public int Id { get; set; }
-        public Patient Patient { get; set; }
+        public string Patient { get; set; }
         public Doctors Doctor { get; set; }
         public DateTime DonateDate { get; set; }
         public decimal BloodQuantity { get; set; }
