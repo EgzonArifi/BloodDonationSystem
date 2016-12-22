@@ -138,7 +138,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Mbyll</button>
+                <button id="btnCancelEdit" type="button" class="btn btn-default" data-dismiss="modal">Mbyll</button>
                 <button type="button" class="btn btn-primary btn-save">Ruaj</button>
             </div>
         </div><!-- /.modal-content -->
@@ -178,7 +178,17 @@
             $('.alert-success').show()
             $('#formDoctor').submit();
         });
-
+        $('#btnCancelEdit').click(function () {
+            $('#modalDoctor').on('hidden.bs.modal', function (e) {
+                $(this)
+                  .find("input,textarea,select")
+                     .val('')
+                     .end()
+                  .find("input[type=checkbox], input[type=radio]")
+                     .prop("checked", "")
+                     .end();
+            })
+        });
         $('.btn-edit').click(function () {
             var item = $(this);
             $('.modal-title').html('Edito Doktorin: ' + item.data('firstname'));
