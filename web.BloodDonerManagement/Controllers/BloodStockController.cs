@@ -18,6 +18,7 @@ namespace web.BloodDonerManagement.Controllers
             {
                 Id = m.FirstOrDefault().Id,
                 Patient = m.FirstOrDefault().Patient.Name + " " + m.FirstOrDefault().Patient.Lastname,
+                BloodType = m.FirstOrDefault().Patient.BloodType.ToString(),
                 BloodQuantity = m.Sum(c => c.BloodQuantity),
                 DonateDate = m.FirstOrDefault().DonateDate,
                 Comment = m.FirstOrDefault().Comment

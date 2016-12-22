@@ -9,6 +9,9 @@
             Pacienti
         </th>
         <th>
+            Grupi i gjakut
+        </th>
+        <th>
            Sasia e gjakut
         </th>
         <th>
@@ -25,6 +28,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Patient)
         </td>
+        <td>
+            <label class="label label-danger">@Html.DisplayFor(modelItem => item.BloodType)</label>
+</td>
         <td>
             @Html.DisplayFor(modelItem => item.BloodQuantity) ml
         </td>
