@@ -12,13 +12,15 @@ namespace web.BloodDonerManagement.Controllers
         // GET: BloodStock
         public ActionResult Index()
         {
-            List<BloodStockViewModel> model = db.BloodStock.Select(m => new BloodStockViewModel
+            List<BloodStockViewModel> model = db.BloodStock
+                .GroupBy(l => l.Patient.BloodType)
+                .Select(m => new BloodStockViewModel
             {
-                Id = m.Id,
-                Patient = m.Patient.Name + " " + m.Patient.Lastname,
-                BloodQuantity = m.BloodQuantity,
-                DonateDate = m.DonateDate,
-                Comment = m.Comment
+                Id = m.FirstOrDefault().Id,
+                Patient = m.FirstOrDefault().Patient.Name + " " + m.FirstOrDefault().Patient.Lastname,
+                BloodQuantity = m.Sum(c => c.BloodQuantity),
+                DonateDate = m.FirstOrDefault().DonateDate,
+                Comment = m.FirstOrDefault().Comment
             }).ToList();
             return View(model);
         }
