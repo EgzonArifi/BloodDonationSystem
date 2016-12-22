@@ -24,5 +24,9 @@ namespace web.BloodDonerManagement.Controllers
             }).ToList();
             return View(model);
         }
+        public ActionResult addOrUpdate()
+        {
+            return View("Create");
+        }
     }
 }
