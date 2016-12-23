@@ -65,6 +65,20 @@ namespace web.BloodDonerManagement.Controllers
                 return RedirectToAction("Index");
                 //return View("Create");
         }
+        public ActionResult delete(int Id)
+        {
+            var blood = db.BloodStock.Where(x => x.Id == Id);
+            if (blood != null)
+            {
+                foreach (var item in blood)
+                {
+                 db.BloodStock.Remove(item);
+                }
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         public JsonResult PatientSearch(string prefix)
        {
