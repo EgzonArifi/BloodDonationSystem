@@ -1,7 +1,7 @@
 ﻿@model  List<web.BloodDonerManagement.Models.BloodStockViewModel>
 
 <h3> Lista e dhurimit te gjakut</h3>
-<p><a href='@Url.Action("Edit", "BloodStock")' class="btn btn-primary btn-lg">Shto shenim</a></p>
+<p><a href='@Url.Action("Create", "BloodStock")' class="btn btn-primary btn-lg">Shto shenim</a></p>
 <br /><br />
 <table class="table table-responsive table-striped">
     <tr>
@@ -42,14 +42,8 @@
         </td>
         <td>
             <div class="text-right">
-                <button type="button" class="btn btn-default btn-edit" data-id="@item.Id"
-                        data-patientid="@item.PatientId"
-                        data-docotorid="@item.DoctorId"
-                        data-quantity="@item.BloodQuantity"
-                        data-comment="@item.Comment">
-                    <i class="glyphicon glyphicon-pencil"></i>
-                </button>
-
+        
+                <p><a href="@Url.Action("Edit", "BloodStock",new { Id = @item.Id , PatientId = @item.PatientId , DoctorId = @item.DoctorId})" class="btn btn-default btn-edit"><i class="glyphicon glyphicon-pencil"></i></a></p>
                 <button type="button" id="deleteItem" class="btn btn-default  btn-delete" data-toggle="modal" data-target="#basic" data-id="@item.Id">
                     <i class="glyphicon glyphicon-trash"></i>
                 </button>

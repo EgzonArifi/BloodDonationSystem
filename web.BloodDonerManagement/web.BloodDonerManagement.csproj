@@ -472,6 +472,7 @@
     <Content Include="Views\Shared\_AlertMessage.cshtml" />
     <Content Include="Views\BloodStock\Index.cshtml" />
     <Content Include="Views\BloodStock\Create.cshtml" />
+    <Content Include="Views\BloodStock\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

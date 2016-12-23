@@ -21,17 +21,37 @@ namespace web.BloodDonerManagement.Controllers
                 BloodType = m.FirstOrDefault().Patient.BloodType.ToString(),
                 BloodQuantity = m.Sum(c => c.BloodQuantity),
                 DonateDate = m.FirstOrDefault().DonateDate,
-                Comment = m.FirstOrDefault().Comment
+                Comment = m.FirstOrDefault().Comment,
+                PatientId = m.FirstOrDefault().Patient.Id,
+                DoctorId = m.FirstOrDefault().Doctor.Id
             }).ToList();
             return View(model);
         }
-        public ActionResult Edit()
+        public ActionResult Create()
         {
             return View("Create");
         }
+        public ActionResult Edit(int Id, int PatientId, int DoctorId)
+        {
+            List<BloodStockViewModel> model = db.BloodStock
+                .Where(x => x.Id == Id)
+                .GroupBy(l => l.Patient.BloodType)
+                .Select(m => new BloodStockViewModel
+                {
+                    Id = m.FirstOrDefault().Id,
+                    Patient = m.FirstOrDefault().Patient.Name + " " + m.FirstOrDefault().Patient.Lastname,
+                    DoctorName = m.FirstOrDefault().Doctor.FirstName + " " + m.FirstOrDefault().Doctor.LastName,
+                    BloodType = m.FirstOrDefault().Patient.BloodType.ToString(),
+                    BloodQuantity = m.Sum(c => c.BloodQuantity),
+                    DonateDate = m.FirstOrDefault().DonateDate,
+                    Comment = m.FirstOrDefault().Comment,
+                    PatientId = PatientId,
+                    DoctorId = DoctorId
+                }).ToList();
+            return View(model);
+        }
         public ActionResult addOrUpdate(BloodStockViewModel model)
         {
-
             var patient = db.Patient.Where(x => x.Id == model.PatientId).FirstOrDefault();
             var doctor = db.Doctors.Where(x => x.Id == model.DoctorId).FirstOrDefault();
             if (model.Id == 0)
@@ -53,11 +73,12 @@ namespace web.BloodDonerManagement.Controllers
                     var blood = db.BloodStock.Where(x => x.Id == model.Id).FirstOrDefault();
                     if (blood != null)
                     {
-                        blood.Patient = model.Donor;
-                        blood.Doctor = model.Doctor;
+                        blood.Patient = patient;
+                        blood.Doctor = doctor;
                         blood.DonateDate = DateTime.Now;
                         blood.Comment = model.Comment;
                         blood.BloodQuantity = model.BloodQuantity;
+                        
                         db.SaveChanges();
                        // Session["alertEdit"] = "True";
                     }

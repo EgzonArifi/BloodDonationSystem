@@ -1,0 +1,103 @@
+﻿@model  List<web.BloodDonerManagement.Models.BloodStockViewModel>
+
+<div class="form-horizontal">
+    <h4>Edito transfuzionin</h4>
+    <hr />
+    <form action="/BloodStock/addOrUpdate" method="post" id="formPatient">
+        <input type="hidden" name="Id" id="Id" value="@Model.FirstOrDefault().Id" />
+        <div class="row col-lg-offset-1">
+            <div class="col-md-4">
+                <div class="control-label col-md-3">
+                    <label>Pacienti</label>
+                </div><!-- /.col-lg-6 -->
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">@@</span>
+                    <input type="text" value="@Model.FirstOrDefault().Patient" id="patientText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="control-label col-md-4">
+                    <label>Doktori</label>
+                </div><!-- /.col-lg-6 -->
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">@@</span>
+                    <input type="text" value="@Model.FirstOrDefault().DoctorName" id="doctorText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div><br />
+        <input type="hidden" id="PatientId" name="PatientId" value="@Model.FirstOrDefault().PatientId"/>
+        <input type="hidden" id="DoctorId" name="DoctorId" value="@Model.FirstOrDefault().DoctorId"/>
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstOrDefault().BloodQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstOrDefault().BloodQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstOrDefault().BloodQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstOrDefault().Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstOrDefault().Comment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstOrDefault().Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ndrysho" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#patientText").autocomplete({
+            source: function(request,response) {
+                $.ajax({
+                    url: "/BloodStock/PatientSearch",
+                    type: "POST",
+                    dataType: "json",
+                    data: {prefix: request.term},
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Name, value: item.Name, id: item.Id };
+                        }))
+
+                    }
+                })
+            },
+            select: function (e, i) {
+                console.log(i);
+                $("#PatientId").val(i.item.id);
+            }
+        });
+
+        $("#doctorText").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/BloodStock/DoctorSearch",
+                    type: "POST",
+                    dataType: "json",
+                    data: { prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.FirstName, value: item.Name, id: item.Id };
+                        }))
+
+                    }
+                })
+            },
+            select: function (e, i) {
+                console.log(i);
+                $("#DoctorId").val(i.item.id);
+            }
+        });
+    })
+</script>
