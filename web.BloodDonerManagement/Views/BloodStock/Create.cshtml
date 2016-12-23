@@ -1,65 +1,55 @@
-﻿@model web.BloodDonerManagement.Models.BloodStock
+﻿@model web.BloodDonerManagement.Models.BloodStockViewModel
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
         <h4>Regjistro transfuzionin</h4>
         <hr />
-        <div class="form-group">
-            <div class="control-label col-md-2">
-               <label>Pacienti</label>
-            </div><!-- /.col-lg-6 -->
-            <div class="col-md-4">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="patientText" placeholder="Search for...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.DonateDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DonateDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DonateDate, "", new { @class = "text-danger" })
+        <form action="/BloodStock/addOrUpdate" method="post" id="formPatient">
+            <input type="hidden" name="Id" id="Id" value="0" />
+            <div class="row col-lg-offset-1">
+                <div class="col-md-4">
+                    <div class="control-label col-md-3">
+                        <label>Pacienti</label>
+                    </div><!-- /.col-lg-6 -->
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">@@</span>
+                        <input type="text" id="patientText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="control-label col-md-4">
+                        <label>Doktori</label>
+                    </div><!-- /.col-lg-6 -->
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">@@</span>
+                        <input type="text" id="doctorText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </div><br />
+            <input type="hidden" id="PatientId" name="PatientId" />
+            <input type="hidden" id="DoctorId" name="DoctorId" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.BloodQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.BloodQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BloodQuantity, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.DonateDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DonateDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DonateDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BloodQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BloodQuantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BloodQuantity, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Regjistro" class="btn btn-default" />
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+            </form>
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -85,9 +75,29 @@
             },
             select: function (e, i) {
                 console.log(i);
-                $("#hfCustomer").val(i.item.id);
+                $("#PatientId").val(i.item.id);
+            }
+        });
+
+        $("#doctorText").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/BloodStock/DoctorSearch",
+                    type: "POST",
+                    dataType: "json",
+                    data: { prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.FirstName, value: item.Name, id: item.Id };
+                        }))
+
+                    }
+                })
+            },
+            select: function (e, i) {
+                console.log(i);
+                $("#DoctorId").val(i.item.id);
             }
         });
     })
 </script>
-<input type="hidden" id="hfCustomer" name="CustomerId" />

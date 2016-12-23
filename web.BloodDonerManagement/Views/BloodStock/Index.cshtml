@@ -1,7 +1,7 @@
 ﻿@model  List<web.BloodDonerManagement.Models.BloodStockViewModel>
 
 <h3> Lista e dhurimit te gjakut</h3>
-<p><a href='@Url.Action("addOrUpdate", "BloodStock")' class="btn btn-primary btn-lg">Shto shenim</a></p>
+<p><a href='@Url.Action("Edit", "BloodStock")' class="btn btn-primary btn-lg">Shto shenim</a></p>
 <br /><br />
 <table class="table table-responsive table-striped">
     <tr>
@@ -30,7 +30,7 @@
         </td>
         <td>
             <label class="label label-danger">@Html.DisplayFor(modelItem => item.BloodType)</label>
-</td>
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.BloodQuantity) ml
         </td>
