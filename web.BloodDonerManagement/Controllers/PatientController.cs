@@ -57,20 +57,28 @@ namespace web.BloodDonerManagement.Controllers
         {
             if (model.Id == 0)
             {
-                db.Patient.Add(new Patient
+                try
                 {
-                    BirthDate = model.BirthDate,
-                    BloodType = model.BloodType,
-                    Lastname = model.LastName,
-                    Name = model.Name,
-                    Address = model.Address,
-                    City = model.City,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    PatientGender = model.PatientGender
-                });
-                db.SaveChanges();
-                Session["alertAddNew"] = "True";
+                    db.Patient.Add(new Patient
+                    {
+                        BirthDate = model.BirthDate,
+                        BloodType = model.BloodType,
+                        Lastname = model.LastName,
+                        Name = model.Name,
+                        Address = model.Address,
+                        City = model.City,
+                        Email = model.Email,
+                        PhoneNumber = model.PhoneNumber,
+                        PatientGender = model.PatientGender
+                    });
+                    db.SaveChanges();
+                    Session["alertAddNew"] = "True";
+                }
+                catch (Exception ex)
+                {
+                    return View("Error", new HandleErrorInfo(ex, "Index", "Patient"));
+                }
+
             }
             else
             {
