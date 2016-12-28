@@ -46,7 +46,7 @@
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
-                    plotShadow: false,
+                    plotShadow: true,
                     renderTo: 'container'
                 },
                 title: {
@@ -54,6 +54,9 @@
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.y} ml</b>'
+                },
+                credits: {
+                    enabled: false
                 },
                 series: [{
                     type: 'pie',
