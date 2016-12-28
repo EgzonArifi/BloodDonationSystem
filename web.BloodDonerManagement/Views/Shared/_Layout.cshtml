@@ -23,18 +23,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Blood Donor Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("SMQTGJ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Pacientat", "Index", "Patient")</li>
-                    <li>@Html.ActionLink("Mjeket", "Index", "Doctors")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Ballina", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Dhuro", "Index", "BloodStock")</li>
+                    <li>@Html.ActionLink("Pacientët", "Index", "Patient")</li>
+                    <li>@Html.ActionLink("Mjekët", "Index", "Doctors")</li>
+                    <li>@Html.ActionLink("Reth nesh", "About", "Home")</li>
+                    <li>@Html.ActionLink("Kontakti", "Contact", "Home")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
