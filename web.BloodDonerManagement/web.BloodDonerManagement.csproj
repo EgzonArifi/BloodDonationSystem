@@ -474,7 +474,9 @@
     <Content Include="Views\BloodStock\Create.cshtml" />
     <Content Include="Views\BloodStock\Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DAL\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
