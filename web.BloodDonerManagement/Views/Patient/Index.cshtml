@@ -1,4 +1,4 @@
-﻿@model  List<web.BloodDonerManagement.Models.PatientsViewModel>
+﻿@model  List<web.BloodDonerManagement.Models.Patient>
     @if(Session["alertAddNew"] != null && Session["alertAddNew"] == "True")
     {
 <div class="alert alert-success alert-dismissible" role="alert">
@@ -40,7 +40,7 @@
     {
         <tr>
             <td>
-                @item.Patient
+                @item.Name @item.Lastname
             </td>
             <td>
                 @item.BirthDate.ToShortDateString()
@@ -55,7 +55,7 @@
             <td>
                 <div class="row">
                     <button type="button" class="btn btn-default btn-edit" data-id="@item.Id" data-name="@item.Name" 
-                            data-lastname="@item.LastName"
+                            data-lastname="@item.Lastname"
                             data-birthdate="@item.BirthDate.ToShortDateString()"
                             data-bloodtype="@item.BloodType.ToString()"
                             data-address="@item.Address"

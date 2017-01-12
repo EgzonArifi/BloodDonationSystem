@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using web.BloodDonerManagement.DAL;
 using web.BloodDonerManagement.Models;
 
 namespace web.BloodDonerManagement.Controllers
@@ -10,68 +11,38 @@ namespace web.BloodDonerManagement.Controllers
    [Authorize]
     public class PatientController : BaseController
     {
+        private IRepository<Patient> _repository = null;
+        public PatientController()
+        {
+            this._repository = new Repository<Patient>();
+        }
         public JsonResult allPatients()
         {
-            List<PatientsViewModel> model = db.Patient.Select(m => new PatientsViewModel
-            {
-                Id = m.Id,
-                Name = m.Name,
-                LastName = m.Lastname,
-                BirthDate = m.BirthDate,
-                BloodType = m.BloodType,
-                Patient = m.Name + " " + m.Lastname,
-                Address = m.Address,
-                City = m.City,
-                PhoneNumber = m.PhoneNumber,
-                Email = m.Email,
-                PatientGender = m.PatientGender
-            }).ToList();
-            return Json(model, JsonRequestBehavior.AllowGet);
+            var employees = _repository.GetAll();
+            return Json(employees.ToList(), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Patient
         public ActionResult Index()
         {
-            //var stock = db.BloodStock.Include("Patient").Include("Doctor");
-            List<PatientsViewModel> model = db.Patient.Select(m => new PatientsViewModel
-            {
-                Id = m.Id,
-                Name = m.Name,
-                LastName = m.Lastname,
-                BirthDate = m.BirthDate,
-                BloodType = m.BloodType,
-                Patient = m.Name + " " + m.Lastname,
-                Address = m.Address,
-                City = m.City,
-                Email = m.Email,
-                PhoneNumber = m.PhoneNumber,
-                PatientGender = m.PatientGender
-            }).ToList();
-            ViewBag.bloodtype = Enum.GetValues(typeof(BloodType));//.Cast < string[]>() ;
+            var employees = _repository.GetAll();
+            ViewBag.bloodtype = Enum.GetValues(typeof(BloodType));
             ViewBag.gender = Enum.GetValues(typeof(Gender));
-            return View(model);
+            return View(employees.ToList());
   
         }
 
-        public ActionResult addOrUpdate(PatientsViewModel model)
+        public ActionResult addOrUpdate(Patient model)
         {
             if (model.Id == 0)
             {
                 try
                 {
-                    db.Patient.Add(new Patient
+                    if (ModelState.IsValid)
                     {
-                        BirthDate = model.BirthDate,
-                        BloodType = model.BloodType,
-                        Lastname = model.LastName,
-                        Name = model.Name,
-                        Address = model.Address,
-                        City = model.City,
-                        Email = model.Email,
-                        PhoneNumber = model.PhoneNumber,
-                        PatientGender = model.PatientGender
-                    });
-                    db.SaveChanges();
+                        _repository.Insert(model);
+                        _repository.Save();
+                    }
                     Session["alertAddNew"] = "True";
                 }
                 catch (Exception ex)
@@ -82,20 +53,10 @@ namespace web.BloodDonerManagement.Controllers
             }
             else
             {
-                var patient = db.Patient.Where(x => x.Id == model.Id).FirstOrDefault();
-                if (patient != null)
+                if (ModelState.IsValid)
                 {
-                    patient.Name = model.Name;
-                    patient.BloodType = model.BloodType;
-                    patient.Lastname = model.LastName;
-                    patient.BirthDate = model.BirthDate;
-                    patient.Address = model.Address;
-                    patient.Email = model.Email;
-                    patient.PhoneNumber = model.PhoneNumber;
-                    patient.City = model.City;
-                    patient.PatientGender = model.PatientGender;
-                    db.SaveChanges();
-                    Session["alertEdit"] = "True";
+                    _repository.Update(model);
+                    _repository.Save();
                 }
             }
             return RedirectToAction("Index");
