@@ -3,28 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using web.BloodDonerManagement.DAL;
 using web.BloodDonerManagement.Models;
 
 namespace web.BloodDonerManagement.Controllers
 {
     public class DoctorsController : BaseController
     {
+        private IDoctor doctorRepository;
+
+        public DoctorsController()
+        {
+            this.doctorRepository = new DoctorRepository(new ApplicationDbContext());
+        }
         // GET: Doctors
         public ActionResult Index()
         {
-            List<DoctorsViewModel> model = db.Doctors.Select(m => new DoctorsViewModel
-            {
-                Id = m.Id,
-                FirstName = m.FirstName,
-                LastName = m.LastName,
-                BirthDate = m.BirthDate,
-                Doctor = m.FirstName + " " + m.LastName,
-                Address = m.Address,
-                City = m.City,
-                Email = m.Email,
-                PhoneNumber = m.PhoneNumber,
-                DoctorGender = m.DoctorGender
-            }).ToList();
+            var model = doctorRepository.GetDoctors();
             ViewBag.gender = Enum.GetValues(typeof(Gender));
             return View(model);
         }
@@ -33,22 +28,12 @@ namespace web.BloodDonerManagement.Controllers
         {
             if (model.Id == 0)
             {
-                db.Doctors.Add(new Doctors
-                {
-                    BirthDate = model.BirthDate,
-                    LastName = model.LastName,
-                    FirstName = model.FirstName,
-                    Address = model.Address,
-                    City = model.City,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    DoctorGender = model.DoctorGender
-                });
-                db.SaveChanges();
+                doctorRepository.InsertDoctor(model);
             }
             else
             {
                 var doctor = db.Doctors.Where(x => x.Id == model.Id).FirstOrDefault();
+                
                 if (doctor != null)
                 {
                     doctor.FirstName = model.FirstName;
@@ -59,25 +44,16 @@ namespace web.BloodDonerManagement.Controllers
                     doctor.PhoneNumber = model.PhoneNumber;
                     doctor.City = model.City;
                     doctor.DoctorGender = model.DoctorGender;
-                    db.SaveChanges();
+                    doctorRepository.UpdateDoctor(doctor);
                 }
             }
+            doctorRepository.Save();
             return RedirectToAction("Index");
         }
         public ActionResult delete(int Id)
         {
-            var doctor = db.Doctors.Where(x => x.Id == Id).FirstOrDefault();
-            if (doctor != null)
-            {
-                db.Doctors.Remove(doctor);
-                var donation = db.BloodStock.Where(x => x.Doctor.Id == Id);
-                foreach (var item in donation)
-                {
-                    db.BloodStock.Remove(item);
-                }
-                db.SaveChanges();
-            }
-
+            doctorRepository.DeleteDoctor(Id);
+            doctorRepository.Save();
             return RedirectToAction("Index");
         }
     }

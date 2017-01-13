@@ -185,6 +185,7 @@
             <div class="modal-footer">
                 <button id="btnCancelEdit" type="button" class="btn btn-default" data-dismiss="modal">Mbyll</button>
                 <button type="button" class="btn btn-primary btn-save">Ruaj</button>
+               
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -208,6 +209,19 @@
     </div></div>
     <script>
         $(document).ready(function () {
+          
+            
+
+            $("#formPatient").validate({
+                rules: {
+                    Name: "required"
+                },
+                messages: {
+                    Name: "Please specify your name"
+                }
+            });
+
+           
 
             $('#BirthDate').datetimepicker({
                 format: 'YYYY-MM-DD',
@@ -215,11 +229,16 @@
             });
 
             $('.btn-addPatient').click(function () {
+                var validator = $("#formPatient").validate();
+                validator.resetForm();
                 $('.modal-title').html('Pacient i ri');
                 $('#modalPatient').modal('show');
             });
 
             $('.btn-save').click(function () {
+                if (!$("#formPatient").valid()) {
+                    return;
+                }
                 $('.alert-success').show()
                 $('#formPatient').submit();
             });
