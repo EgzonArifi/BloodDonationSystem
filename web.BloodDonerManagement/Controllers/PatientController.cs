@@ -53,10 +53,17 @@ namespace web.BloodDonerManagement.Controllers
             }
             else
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    _repository.Update(model);
-                    _repository.Save();
+                    if (ModelState.IsValid)
+                    {
+                        _repository.Update(model);
+                        _repository.Save();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return View("Error", new HandleErrorInfo(ex, "Index", "Patient"));
                 }
             }
             return RedirectToAction("Index");
