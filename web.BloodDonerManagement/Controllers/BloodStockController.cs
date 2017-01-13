@@ -88,13 +88,11 @@ namespace web.BloodDonerManagement.Controllers
         }
         public ActionResult delete(int Id)
         {
-            var blood = db.BloodStock.Where(x => x.Id == Id);
+            var blood = db.BloodStock.Include("Patient").Where(x => x.Patient.Id == Id);
             if (blood != null)
             {
-                foreach (var item in blood)
-                {
-                 db.BloodStock.Remove(item);
-                }
+                 db.BloodStock.RemoveRange(blood);
+                
                 db.SaveChanges();
             }
 

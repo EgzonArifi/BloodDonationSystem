@@ -44,7 +44,7 @@
             <div class="text-right">
         
                 <p><a href="@Url.Action("Edit", "BloodStock",new { Id = @item.Id , PatientId = @item.PatientId , DoctorId = @item.DoctorId})" class="btn btn-default btn-edit"><i class="glyphicon glyphicon-pencil"></i></a></p>
-                <button type="button" id="deleteItem" class="btn btn-default  btn-delete" data-toggle="modal" data-target="#basic" data-id="@item.Id">
+                <button type="button" id="deleteItem" class="btn btn-default  btn-delete" data-toggle="modal" data-target="#basic" data-id="@item.PatientId">
                     <i class="glyphicon glyphicon-trash"></i>
                 </button>
             </div>
