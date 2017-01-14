@@ -17,9 +17,9 @@ namespace web.BloodDonerManagement.DAL
             db = new ApplicationDbContext();
             dbSet = db.Set<T>();
         }
-        public IEnumerable<T> GetAll()
+        public IEnumerable<Patient> GetAll()
         {
-            return dbSet.ToList();
+            return db.Patient.OrderByDescending(o => o.Id).ToList();
         }
 
         public T GetById(object Id)
