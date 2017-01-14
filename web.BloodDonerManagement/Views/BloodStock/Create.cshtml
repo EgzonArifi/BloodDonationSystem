@@ -12,7 +12,7 @@
                     </div><!-- /.col-lg-6 -->
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">@@</span>
-                        <input type="text" id="patientText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                        <input type="text" id="patientText" name="patientText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -21,7 +21,7 @@
                     </div><!-- /.col-lg-6 -->
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">@@</span>
-                        <input type="text" id="doctorText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                        <input type="text" id="doctorText" name="doctorText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div><br />
@@ -64,6 +64,20 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $("#formPatient").validate({
+            rules: {
+                patientText: "required",
+                doctorText: "required",
+                BloodQuantity: "required"
+            },
+            messages: {
+                patientText: "Zgjeni donorin",
+                doctorText: "Zgjeni doktorin",
+                BloodQuantity: "Shenoni sasine e gjakut te dhuruar"
+            }
+        });
+
         $("#patientText").autocomplete({
             source: function(request,response) {
                 $.ajax({
