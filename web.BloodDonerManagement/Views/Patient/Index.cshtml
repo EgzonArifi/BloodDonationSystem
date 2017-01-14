@@ -214,10 +214,24 @@
 
             $("#formPatient").validate({
                 rules: {
-                    Name: "required"
+                    Name: "required",
+                    LastName: "required",
+                    BirthDate: "required",
+                    BloodType: "required",
+                    Address: "required",
+                    City: "required",
+                    Email: "required",
+                    PatientGender: "required"
                 },
                 messages: {
-                    Name: "Please specify your name"
+                    Name: "Plotesoni emrin",
+                    LastName: "Plotesoni mbiemrin",
+                    BirthDate: "Zgjedhni daten e lindjes",
+                    BloodType: "Zgjedhni grupin e gjakut",
+                    Address: "Vendosni adresen tuaj",
+                    City: "Vendosni qytetin",
+                    Email: "Shenoni emailin",
+                    PatientGender: "Zgjedhni gjinine"
                 }
             });
 

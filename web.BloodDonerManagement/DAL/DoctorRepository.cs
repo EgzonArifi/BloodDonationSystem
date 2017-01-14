@@ -30,7 +30,7 @@ namespace web.BloodDonerManagement.DAL
                 Email = m.Email,
                 PhoneNumber = m.PhoneNumber,
                 DoctorGender = m.DoctorGender
-            }).ToList();
+            }).OrderByDescending(o => o.Id).ToList();
         }
 
         public DoctorsViewModel GetDoctorByID(int Id)
