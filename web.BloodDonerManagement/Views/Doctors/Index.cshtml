@@ -164,12 +164,35 @@
 <script>
     $(document).ready(function () {
 
+        $("#formDoctor").validate({
+            rules: {
+                FirstName: "required",
+                LastName: "required",
+                BirthDate: "required",
+                Address: "required",
+                City: "required",
+                Email: "required",
+                DoctorGender: "required"
+            },
+            messages: {
+                FirstName: "Plotesoni emrin",
+                LastName: "Plotesoni mbiemrin",
+                BirthDate: "Zgjedhni daten e lindjes",
+                Address: "Vendosni adresen tuaj",
+                City: "Vendosni qytetin",
+                Email: "Shenoni emailin",
+                DoctorGender: "Zgjedhni gjinine"
+            }
+        });
+
         $('#BirthDate').datetimepicker({
             format: 'YYYY-MM-DD',
             showTodayButton:true
         });
 
         $('.btn-addDoctor').click(function () {
+            var validator = $("#formDoctor").validate();
+            validator.resetForm();
             $('.modal-title').html('Doktori i ri');
             $('#modalDoctor').modal('show');
         });
