@@ -220,7 +220,15 @@
                     BloodType: "required",
                     Address: "required",
                     City: "required",
-                    Email: "required",
+                    Email: {
+                        required:  {
+                            depends:function(){
+                                $(this).val($.trim($(this).val()));
+                                return true;
+                            }   
+                        },
+                        customemail: true
+                    },
                     PatientGender: "required"
                 },
                 messages: {
@@ -230,11 +238,16 @@
                     BloodType: "Zgjedhni grupin e gjakut",
                     Address: "Vendosni adresen tuaj",
                     City: "Vendosni qytetin",
-                    Email: "Shenoni emailin",
+                    Email: "Email-i nuk eshte ne rregull",
                     PatientGender: "Zgjedhni gjinine"
                 }
             });
-
+            $.validator.addMethod("customemail",
+                    function (value, element) {
+                    return /^\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value);
+                 },
+          "Sorry, I've enabled very strict email validation"
+            );
            
 
             $('#BirthDate').datetimepicker({
