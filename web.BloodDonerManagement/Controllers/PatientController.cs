@@ -11,10 +11,11 @@ namespace web.BloodDonerManagement.Controllers
    [Authorize]
     public class PatientController : BaseController
     {
-        private IRepository<Patient> _repository = null;
+        private IPatientRepository _repository;
+
         public PatientController()
         {
-            this._repository = new Repository<Patient>();
+            this._repository = new PatientRepository(new ApplicationDbContext());
         }
         public JsonResult allPatients()
         {
@@ -25,7 +26,7 @@ namespace web.BloodDonerManagement.Controllers
         // GET: Patient
         public ActionResult Index()
         {
-            var employees = _repository.GetAll();
+            var employees = _repository.GetOrderedPatients();
             ViewBag.bloodtype = Enum.GetValues(typeof(BloodType));
             ViewBag.gender = Enum.GetValues(typeof(Gender));
             return View(employees.ToList());

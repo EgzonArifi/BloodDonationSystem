@@ -210,7 +210,9 @@
     <Compile Include="DAL\DoctorRepository.cs" />
     <Compile Include="DAL\IBloodStock.cs" />
     <Compile Include="DAL\IDoctor.cs" />
+    <Compile Include="DAL\IPatientRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />
+    <Compile Include="DAL\PatientRepository.cs" />
     <Compile Include="DAL\Repository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
