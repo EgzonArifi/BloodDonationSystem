@@ -17,13 +17,14 @@ namespace web.BloodDonerManagement.Controllers
             this.doctorRepository = new DoctorRepository(new ApplicationDbContext());
         }
         // GET: Doctors
+        [Authorize]
         public ActionResult Index()
         {
             var model = doctorRepository.GetDoctors();
             ViewBag.gender = Enum.GetValues(typeof(Gender));
             return View(model);
         }
-
+        [Authorize]
         public ActionResult addOrUpdate(DoctorsViewModel model)
         {
             if (model.Id == 0)
@@ -50,6 +51,7 @@ namespace web.BloodDonerManagement.Controllers
             doctorRepository.Save();
             return RedirectToAction("Index");
         }
+        [Authorize]
         public ActionResult delete(int Id)
         {
             doctorRepository.DeleteDoctor(Id);

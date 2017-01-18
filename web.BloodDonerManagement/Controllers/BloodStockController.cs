@@ -23,15 +23,18 @@ namespace web.BloodDonerManagement.Controllers
             var model = bloodRepository.GetBloodStock();
             return View(model);
         }
+        [Authorize]
         public ActionResult Create()
         {
             return View("Create");
         }
+        [Authorize]
         public ActionResult Edit(int Id, int PatientId, int DoctorId)
         {
             var model = bloodRepository.GetBloodStock(Id, PatientId, DoctorId);
             return View(model);
         }
+        [Authorize]
         public ActionResult addOrUpdate(BloodStockViewModel model)
         {
             var patient = db.Patient.Where(x => x.Id == model.PatientId).FirstOrDefault();
@@ -57,6 +60,7 @@ namespace web.BloodDonerManagement.Controllers
                 bloodRepository.Save();
                 return RedirectToAction("Index");
         }
+        [Authorize]
         public ActionResult delete(int Id)
         {
             try
