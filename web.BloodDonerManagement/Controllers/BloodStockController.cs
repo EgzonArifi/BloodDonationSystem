@@ -17,6 +17,7 @@ namespace web.BloodDonerManagement.Controllers
             this.bloodRepository = new BloodStockRepository(new ApplicationDbContext());
         }
         // GET: BloodStock
+        [Authorize]
         public ActionResult Index()
         {
             var model = bloodRepository.GetBloodStock();
