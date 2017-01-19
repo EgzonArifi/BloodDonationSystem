@@ -12,7 +12,7 @@
                     </div><!-- /.col-lg-6 -->
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">@@</span>
-                        <input type="text" id="patientText" name="patientText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                        <input type="text" id="patientText" name="patientText" class="form-control" placeholder="Search Patient" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -21,7 +21,7 @@
                     </div><!-- /.col-lg-6 -->
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">@@</span>
-                        <input type="text" id="doctorText" name="doctorText" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                        <input type="text" id="doctorText" name="doctorText" class="form-control" placeholder="Search Doctor" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div><br />
@@ -66,15 +66,20 @@
     $(document).ready(function () {
 
         $("#formPatient").validate({
+            ignore: "",
             rules: {
                 patientText: "required",
                 doctorText: "required",
-                BloodQuantity: "required"
+                BloodQuantity: "required",
+                PatientId: "required",
+                DoctorId: "required"
             },
             messages: {
                 patientText: "Zgjeni donorin",
                 doctorText: "Zgjeni doktorin",
-                BloodQuantity: "Shenoni sasine e gjakut te dhuruar"
+                BloodQuantity: "Shenoni sasine e gjakut te dhuruar",
+                PatientId: "Patient Not found",
+                DoctorId: "Doctor Not found"
             }
         });
 

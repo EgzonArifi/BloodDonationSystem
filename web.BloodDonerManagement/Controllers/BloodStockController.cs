@@ -31,8 +31,12 @@ namespace web.BloodDonerManagement.Controllers
         [Authorize]
         public ActionResult Edit(int Id, int PatientId, int DoctorId)
         {
-            var model = bloodRepository.GetBloodStock(Id, PatientId, DoctorId);
-            return View(model);
+            if (String.IsNullOrEmpty(Id.ToString()) && String.IsNullOrEmpty(PatientId.ToString()) && String.IsNullOrEmpty(DoctorId.ToString()))
+            {
+             var model = bloodRepository.GetBloodStock(Id, PatientId, DoctorId);
+             return View(model);
+            }
+            return View("Create");
         }
         [Authorize]
         public ActionResult addOrUpdate(BloodStockViewModel model)
@@ -41,7 +45,19 @@ namespace web.BloodDonerManagement.Controllers
             var doctor = db.Doctors.Where(x => x.Id == model.DoctorId).FirstOrDefault();
             if (model.Id == 0)
             {
-                bloodRepository.InsertBloodDonation(model);
+                try
+                {
+                    if (model != null)
+                    {
+                        bloodRepository.InsertBloodDonation(model);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    return View("Error", new HandleErrorInfo(ex, "Index", "BloodStock"));
+                }
+                
             }
             else
             {

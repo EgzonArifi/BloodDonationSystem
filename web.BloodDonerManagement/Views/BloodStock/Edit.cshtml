@@ -78,7 +78,23 @@
                 $("#PatientId").val(i.item.id);
             }
         });
-
+        $("#formPatient").validate({
+            ignore: "",
+            rules: {
+                patientText: "required",
+                doctorText: "required",
+                BloodQuantity: "required",
+                PatientId: "required",
+                DoctorId: "required"
+            },
+            messages: {
+                patientText: "Zgjeni donorin",
+                doctorText: "Zgjeni doktorin",
+                BloodQuantity: "Shenoni sasine e gjakut te dhuruar",
+                PatientId: "Not found",
+                DoctorId: "Not found"
+            }
+        });
         $("#doctorText").autocomplete({
             source: function (request, response) {
                 $.ajax({

@@ -18,18 +18,16 @@ namespace web.BloodDonerManagement.DAL
 
         public IEnumerable<BloodStockViewModel> GetBloodStock()
         {
-            return context.BloodStock
-                .GroupBy(l => l.Patient.BloodType)
-                .Select(m => new BloodStockViewModel
+            return context.BloodStock.Select(m => new BloodStockViewModel
                 {
-                    Id = m.FirstOrDefault().Id,
-                    Patient = m.FirstOrDefault().Patient.Name + " " + m.FirstOrDefault().Patient.Lastname,
-                    BloodType = m.FirstOrDefault().Patient.BloodType.ToString(),
-                    BloodQuantity = m.Sum(c => c.BloodQuantity),
-                    DonateDate = m.FirstOrDefault().DonateDate,
-                    Comment = m.FirstOrDefault().Comment,
-                    PatientId = m.FirstOrDefault().Patient.Id,
-                    DoctorId = m.FirstOrDefault().Doctor.Id
+                    Id = m.Id,
+                    Patient = m.Patient.Name + " " + m.Patient.Lastname,
+                    BloodType = m.Patient.BloodType.ToString(),
+                    BloodQuantity = m.BloodQuantity,
+                    DonateDate = m.DonateDate,
+                    Comment = m.Comment,
+                    PatientId = m.Patient.Id,
+                    DoctorId = m.Doctor.Id
                 }).OrderByDescending(o => o.Id).ToList();
         }
         public IEnumerable<BloodStockViewModel> GetBloodStock(int Id, int PatientId, int DoctorId)
